@@ -1,0 +1,83 @@
+#!/usr/bin/env ruby
+require 'open3'
+require 'optparse'
+require 'optparse/date'
+require 'rake/file_list'
+require 'active_support/core_ext/date'
+require 'active_support/core_ext/integer/time'
+require 'active_support/core_ext/object/blank'
+
+CMD_DEFAULT = "git log --author='Matthew Erhard' --date=short " \
+              "--pretty='%h %ad | %s'"
+
+REPO_DIRS = Rake::FileList.new(
+  "~/dev/**/.git"
+).pathmap('%d')
+
+# encapsulates gathering and outputting git histories for all REPO_DIRS
+class GitHistory
+  def self.run(**opts)
+    new(**opts).run
+  end
+
+  attr_reader :cmd
+
+  def initialize(since:, before:)
+    @cmd = "#{CMD_DEFAULT} --since=#{since.to_formatted_s(:db)} " \
+           "--before=#{before.to_formatted_s(:db)}"
+  end
+
+  def run
+    histories = REPO_DIRS.map { |repo| git_history(repo) }.compact
+    puts histories.unshift(cmd).join("\n\n")
+  end
+
+  def git_history(repo)
+    cmd_output = ''
+    FileUtils.cd(repo, verbose: false) do
+      stdout_and_stderr, _status = Open3.capture2e(cmd)
+      cmd_output << stdout_and_stderr.chomp
+    end
+
+    "#{repo}\n#{cmd_output}" if cmd_output.present?
+  end
+end
+
+options = {
+  since:  2.months.ago.end_of_month.to_date,
+  before: Date.today.beginning_of_month,
+}
+OptionParser.new do |opts|
+  opts.banner = 'Usage: git_history [options]'
+
+  opts.separator ""
+  opts.separator "Preferred option:"
+
+  opts.on('-m', '--month YYYY-MM', "Month of search (default: #{1.month.ago.strftime('%Y-%m')})") do |year_month|
+    year, month = year_month.split(/-/).map(&:to_i)
+    first_of_month = Date.new(year, month, 1)
+
+    options[:since]  = first_of_month - 1.day
+    options[:before] = first_of_month + 1.month
+  end
+
+  opts.separator ""
+  opts.separator "Other options:"
+
+  opts.on('-s', '--start YYYY-MM-DD', Date, "Start date of search") do |since|
+    options[:since] = since
+  end
+
+  opts.on('-e', '--end   YYYY-MM-DD', Date, "End date of search") do |before|
+    options[:before] = before
+  end
+
+  opts.separator ""
+
+  opts.on_tail('-h', '--help', 'Show this message') do
+    puts opts
+    exit
+  end
+end.parse!
+
+GitHistory.run(options)
