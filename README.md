@@ -26,10 +26,8 @@ git clone git@github.com:merhard/dotfiles.git ~/dotfiles
 # Install packages
 ```shell
 brew install wget
-brew install asdf
 brew install git
 brew install hub
-brew install ruby-build
 brew install the_silver_searcher
 brew install vim
 brew install watchman
@@ -59,12 +57,27 @@ brew cask install logitech-options
 brew cask install rowanj-gitx
 brew cask install slack
 brew cask install sublime-text
+
+# Install ASDF
+https://github.com/asdf-vm/asdf
+```shell
+git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.5.0
+
+brew install autoconf
+brew install automake
+brew install coreutils
+brew install libtool
+brew install libxslt
+brew install libyaml
+brew install openssl
+brew install readline
+brew install unixodbc
 ```
 
 # Install Node.js
 ```shell
 asdf plugin-add nodejs
-bash /usr/local/opt/asdf/plugins/nodejs/bin/import-release-team-keyring
+bash ~/.asdf/plugins/nodejs/bin/import-release-team-keyring
 asdf list-all nodejs | tail -1
 asdf install nodejs <version>
 asdf global nodejs <version>
