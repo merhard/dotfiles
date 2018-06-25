@@ -139,7 +139,7 @@ git_prompt () {
   ref=$(command git symbolic-ref HEAD 2> /dev/null) || \
   ref=$(command git rev-parse --short HEAD 2> /dev/null) || return 0
 
-  branch_prompt="%{$fg[green]%}${ref#refs/heads/}%{$reset_color%}"
+  branch_prompt="%{%F{136}%}${ref#refs/heads/}%{$reset_color%}"
 
   git_status=$(command git status -s --ignore-submodules=dirty 2> /dev/null | tail -n1)
   if [[ -n $git_status ]]; then
@@ -161,11 +161,20 @@ ruby_prompt () {
   echo " %{%F{red}%}ruby-$ruby_version%{$reset_color%}"
 }
 
+node_prompt () {
+  # Show NODE status only for JS-specific folders
+  [[ -f package.json || -d node_modules || -n *.js(#qN^/) ]] || return
+
+  local node_version=$(asdf current nodejs | awk '{print $1}')
+
+  echo " %{%F{green}%}node-$node_version%{$reset_color%}"
+}
+
 time_prompt="%{$fg[yellow]%}%T%{$reset_color%}"
 session_prompt="%{$fg[blue]%}%n@%m%{$reset_color%}"
 dir_prompt="%{$fg[cyan]%}%~%{$reset_color%}"
 
-RPROMPT="%{$(echotc UP 1)%}\$(git_prompt)\$(ruby_prompt)%{$(echotc DO 1)%}"
+RPROMPT="%{$(echotc UP 1)%}\$(git_prompt)\$(ruby_prompt)\$(node_prompt)%{$(echotc DO 1)%}"
 PROMPT="$time_prompt $session_prompt:$dir_prompt
 ➭ "
 
