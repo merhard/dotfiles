@@ -129,6 +129,7 @@ cdpath=(
 )
 
 ##### PROMPT ##################################################################
+setopt extended_glob
 setopt prompt_subst
 
 autoload -U colors
@@ -151,9 +152,13 @@ git_prompt () {
 }
 
 ruby_prompt () {
-  ruby_version=$(ruby -v | cut -d p -f 1 | tr ' ' -)
+  # Show versions only for Ruby-specific folders
+  [[ -f Gemfile || -f Rakefile || -n *.rb(#qN^/) ]] || return
 
-  echo " %{$fg[magenta]%}$ruby_version%{$reset_color%}"
+  local ruby_version=$(asdf current ruby | awk '{print $1}')
+  [[ -z $ruby_version || "${ruby_version}" == "system" ]] && return
+
+  echo " %{%F{red}%}ruby-$ruby_version%{$reset_color%}"
 }
 
 time_prompt="%{$fg[yellow]%}%T%{$reset_color%}"
