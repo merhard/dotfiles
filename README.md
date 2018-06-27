@@ -8,10 +8,8 @@ xcode-select --install
 # Install ZSH
 ```shell
 brew install zsh
-which zsh | pbcopy
-sudo vim /etc/shells
-# Go<CMD+v><Esc>:wq
-chsh -s $(which zsh)
+sudo sh -c "echo $(which zsh) >> /etc/shells"
+sudo chsh -s $(which zsh)
 ```
 
 # Setup SSH Key
