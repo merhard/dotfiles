@@ -29,6 +29,7 @@ brew install hub
 brew install the_silver_searcher
 brew install vim
 brew install watchman
+brew install yarn
 
 brew install postgresql
 brew services start postgresql
@@ -83,13 +84,12 @@ bash ~/.asdf/plugins/nodejs/bin/import-release-team-keyring
 asdf list-all nodejs | tail -1
 asdf install nodejs <version>
 asdf global nodejs <version>
-brew install yarn --without-node
 ```
 
 # Install Ruby
 ```shell
 asdf plugin-add ruby
-asdf list-all ruby | tail -1
+asdf list-all ruby | grep -v "[a-z]" | tail -1
 asdf install ruby <version>
 asdf global ruby <version>
 ```
@@ -98,4 +98,19 @@ asdf global ruby <version>
 ```shell
 sysctl -n hw.ncpu
 bundle config --global jobs <number_of_cores - 1>
+```
+
+# Edit MacOS Settings
+```shell
+# Disable smart quotes
+defaults write NSGlobalDomain NSAutomaticQuoteSubstitutionEnabled -bool false
+
+# Disable smart dashes
+defaults write NSGlobalDomain NSAutomaticDashSubstitutionEnabled -bool false
+
+# Increase sound quality for Bluetooth headphones/headsets
+defaults write com.apple.BluetoothAudioAgent "Apple Bitpool Min (editable)" -int 40
+
+# Show hidden files in Finder
+defaults write com.apple.finder AppleShowAllFiles -bool true && killall Finder
 ```
