@@ -11,7 +11,7 @@ CMD_DEFAULT = "git log --author='Matthew Erhard' --date=short " \
               "--pretty='%h %ad | %s'"
 
 REPO_DIRS = Rake::FileList.new(
-  "~/dev/**/.git"
+  "~/Projects/**/.git"
 ).pathmap('%d')
 
 # encapsulates gathering and outputting git histories for all REPO_DIRS

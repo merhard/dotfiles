@@ -124,7 +124,7 @@ export DISABLE_SPRING=1
 ##### PATH ####################################################################
 setopt auto_cd
 cdpath=(
-  ~/dev
+  ~/Projects
   ~
 )
 
