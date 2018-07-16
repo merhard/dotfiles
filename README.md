@@ -80,7 +80,7 @@ brew install unixodbc
 
 # Install Node.js
 ```shell
-asdf plugin-add nodejs
+asdf plugin-add nodejs https://github.com/asdf-vm/asdf-nodejs.git
 bash ~/.asdf/plugins/nodejs/bin/import-release-team-keyring
 asdf list-all nodejs | tail -1
 asdf install nodejs <version>
@@ -89,7 +89,7 @@ asdf global nodejs <version>
 
 # Install Ruby
 ```shell
-asdf plugin-add ruby
+asdf plugin-add ruby https://github.com/asdf-vm/asdf-ruby.git
 asdf list-all ruby | grep -v "[a-z]" | tail -1
 asdf install ruby <version>
 asdf global ruby <version>
