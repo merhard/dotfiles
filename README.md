@@ -69,6 +69,7 @@ git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.5.0
 brew install autoconf
 brew install automake
 brew install coreutils
+brew install libffi
 brew install libtool
 brew install libxslt
 brew install libyaml
