@@ -1,20 +1,80 @@
 #!/usr/bin/env ruby
+
 require 'open3'
 require 'optparse'
 require 'optparse/date'
 require 'rake/file_list'
-require 'active_support/core_ext/date'
-require 'active_support/core_ext/integer/time'
-require 'active_support/core_ext/object/blank'
 
-CMD_DEFAULT = "git log --author='Matthew Erhard' --date=short " \
-              "--pretty='%h %ad | %s'"
+DEFAULT_OPTIONS = {
+  since:  Date.today - 7,
+  before: Date.today,
+}.freeze
+
+GIT_COMMAND = lambda do |since, before|
+  "git log --author='Matthew Erhard' --date=short --pretty='%h %ad | %s'" \
+  " --since=#{since.strftime('%Y-%m-%d')}" \
+  " --before=#{before.strftime('%Y-%m-%d')}"
+end
 
 REPO_DIRS = Rake::FileList.new(
-  "~/Projects/**/.git"
+  File.join(Dir.home, "Projects/**/.git")
 ).pathmap('%d')
 
-# encapsulates gathering and outputting git histories for all REPO_DIRS
+options = {}
+OptionParser.new do |opts|
+  opts.banner = 'Usage: git_history [options]'
+
+  opts.separator ""
+  opts.separator "Options:"
+
+  default_start_value = DEFAULT_OPTIONS[:since].strftime('%Y-%m-%d')
+  opts.on(
+    '-s',
+    '--start YYYY-MM-DD',
+    Date,
+    "Start date of search (default: #{default_start_value})"
+  ) do |since|
+    options[:since] = since
+  end
+
+  default_end_value = DEFAULT_OPTIONS[:before].strftime('%Y-%m-%d')
+  opts.on(
+    '-e',
+    '--end   YYYY-MM-DD',
+    Date,
+    "End date of search   (default: #{default_end_value})"
+  ) do |before|
+    options[:before] = before
+  end
+
+  opts.separator ""
+
+  opts.on('-m', '--month YYYY-MM', "Month of search") do |year_month|
+    year, month = year_month.split(/-/).map(&:to_i)
+
+    options[:since]  ||= Date.new(year, month, 1)
+    options[:before] ||= Date.new(year, month + 1, 1) - 1
+  end
+
+  opts.separator ""
+
+  opts.on('-h', '--help', 'Show this message') do
+    puts opts
+    exit
+  end
+
+  opts.separator ""
+  opts.separator "Searched Repositories:"
+  REPO_DIRS.each { |repo| opts.separator("    #{repo}") }
+
+  opts.separator ""
+  opts.separator "Example Git Command:"
+  opts.separator(
+    "    #{GIT_COMMAND.call(DEFAULT_OPTIONS[:since], DEFAULT_OPTIONS[:before])}"
+  )
+  opts.separator ""
+end.parse!
+
 class GitHistory
   def self.run(**opts)
     new(**opts).run
@@ -23,8 +83,7 @@ class GitHistory
   attr_reader :cmd
 
   def initialize(since:, before:)
-    @cmd = "#{CMD_DEFAULT} --since=#{since.to_formatted_s(:db)} " \
-           "--before=#{before.to_formatted_s(:db)}"
+    @cmd = GIT_COMMAND.call(since, before)
   end
 
   def run
@@ -39,45 +98,8 @@ class GitHistory
       cmd_output << stdout_and_stderr.chomp
     end
 
-    "#{repo}\n#{cmd_output}" if cmd_output.present?
+    "#{repo}\n#{cmd_output}" unless cmd_output.empty?
   end
 end
 
-options = {
-  since:  2.months.ago.end_of_month.to_date,
-  before: Date.today.beginning_of_month,
-}
-OptionParser.new do |opts|
-  opts.banner = 'Usage: git_history [options]'
-
-  opts.separator ""
-  opts.separator "Preferred option:"
-
-  opts.on('-m', '--month YYYY-MM', "Month of search (default: #{1.month.ago.strftime('%Y-%m')})") do |year_month|
-    year, month = year_month.split(/-/).map(&:to_i)
-    first_of_month = Date.new(year, month, 1)
-
-    options[:since]  = first_of_month - 1.day
-    options[:before] = first_of_month + 1.month
-  end
-
-  opts.separator ""
-  opts.separator "Other options:"
-
-  opts.on('-s', '--start YYYY-MM-DD', Date, "Start date of search") do |since|
-    options[:since] = since
-  end
-
-  opts.on('-e', '--end   YYYY-MM-DD', Date, "End date of search") do |before|
-    options[:before] = before
-  end
-
-  opts.separator ""
-
-  opts.on_tail('-h', '--help', 'Show this message') do
-    puts opts
-    exit
-  end
-end.parse!
-
-GitHistory.run(options)
+GitHistory.run(DEFAULT_OPTIONS.dup.merge(options))
