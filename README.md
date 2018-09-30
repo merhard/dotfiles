@@ -52,8 +52,8 @@ brew cask install dropbox
 brew cask install flux
 brew cask install google-chrome
 brew cask install gpg-suite
-brew cask install rowanj-gitx
 brew cask install slack
+brew cask install sublime-merge
 brew cask install sublime-text
 
 brew tap homebrew/cask-drivers
