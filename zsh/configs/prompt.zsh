@@ -21,17 +21,25 @@ git_prompt () {
 }
 
 ruby_prompt () {
-  # Show versions only for Ruby-specific folders
+  # Show version only for Ruby-specific folders
   [[ -f Gemfile || -f Rakefile || -n *.rb(#qN^/) ]] || return
 
   local ruby_version=$(asdf current ruby | awk '{print $1}')
-  [[ -z $ruby_version || "${ruby_version}" == "system" ]] && return
 
   echo " %{%F{red}%}ruby-$ruby_version%{%f%}"
 }
 
+elixir_prompt () {
+  # Show version only for Elixir-specific folders
+  [[ -f mix.exs || -n *.ex(#qN^/) || -n *.exs(#qN^/) ]] || return
+
+  local elixir_version=$(asdf current elixir | awk '{print $1}')
+
+  echo " %{%F{magenta}%}elixir-$elixir_version%{%f%}"
+}
+
 node_prompt () {
-  # Show NODE status only for JS-specific folders
+  # Show version only for JS-specific folders
   [[ -f package.json || -d node_modules || -n *.js(#qN^/) ]] || return
 
   local node_version=$(asdf current nodejs | awk '{print $1}')
@@ -43,6 +51,6 @@ time_prompt="%{%F{yellow}%}%T%{%f%}"
 session_prompt="%{%F{blue}%}%n@%m%{%f%}"
 dir_prompt="%{%F{cyan}%}%~%{%f%}"
 
-RPROMPT="%{$(echotc UP 1)%}\$(git_prompt)\$(ruby_prompt)\$(node_prompt)%{$(echotc DO 1)%}"
+RPROMPT="%{$(echotc UP 1)%}\$(git_prompt)\$(ruby_prompt)\$(elixir_prompt)\$(node_prompt)%{$(echotc DO 1)%}"
 PROMPT="$time_prompt $session_prompt:$dir_prompt
 ➭ "
