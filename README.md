@@ -3,7 +3,9 @@
 ```shell
 xcode-select --install
 
-/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+
+brew install wget
 ```
 
 # Install ZSH
@@ -28,7 +30,6 @@ git clone git@github.com:merhard/dotfiles.git ~/dotfiles
 # Install packages
 
 ```shell
-brew install wget
 brew install git
 brew install hub
 brew install the_silver_searcher
