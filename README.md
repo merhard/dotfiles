@@ -21,6 +21,7 @@ chsh -s $(which zsh)
 ```shell
 brew install git
 brew install hub
+brew install ruby
 brew install the_silver_searcher
 brew install vim
 brew install watchman
