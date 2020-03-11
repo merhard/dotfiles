@@ -60,6 +60,10 @@ OptionParser.new do |opts|
     options[:before] ||= Date.new(year, month + 1, 1) - 1
   end
 
+  opts.on('-y', '--yesterday', "Start of search is yesterday") do
+    options[:since] = Date.today - 1
+  end
+
   opts.separator ""
 
   opts.on('-h', '--help', 'Show this message') do
