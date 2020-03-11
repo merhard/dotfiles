@@ -16,17 +16,6 @@ sudo sh -c "echo $(which zsh) >> /etc/shells"
 chsh -s $(which zsh)
 ```
 
-# Setup SSH Key
-
-https://help.github.com/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent/
-
-# Install Dotfiles
-
-```shell
-git clone git@github.com:merhard/dotfiles.git ~/dotfiles
-~/dotfiles/install
-```
-
 # Install packages
 
 ```shell
@@ -112,6 +101,17 @@ asdf global ruby <version>
 ```shell
 sysctl -n hw.ncpu
 bundle config --global jobs <number_of_cores - 1>
+```
+
+# Setup SSH Key
+
+https://help.github.com/en/github/authenticating-to-github/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent
+
+# Install Dotfiles
+
+```shell
+git clone git@github.com:merhard/dotfiles.git ~/dotfiles
+~/dotfiles/install
 ```
 
 # Edit MacOS Settings
