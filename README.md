@@ -1,4 +1,5 @@
 # Install Homebrew
+
 ```shell
 xcode-select --install
 
@@ -6,6 +7,7 @@ xcode-select --install
 ```
 
 # Install ZSH
+
 ```shell
 brew install zsh
 sudo sh -c "echo $(which zsh) >> /etc/shells"
@@ -13,15 +15,18 @@ chsh -s $(which zsh)
 ```
 
 # Setup SSH Key
+
 https://help.github.com/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent/
 
 # Install Dotfiles
+
 ```shell
 git clone git@github.com:merhard/dotfiles.git ~/dotfiles
 ~/dotfiles/install
 ```
 
 # Install packages
+
 ```shell
 brew install wget
 brew install git
@@ -39,9 +44,11 @@ brew services start redis
 ```
 
 # Install applications
+
 - Sophos Antivirus from website
 - Moom from App Store (for license)
 - Remaining from Homebrew:
+
 ```shell
 brew cask install 1password
 brew cask install adobe-acrobat-reader
@@ -62,7 +69,9 @@ brew cask install logitech-unifying
 ```
 
 # Install ASDF
+
 https://github.com/asdf-vm/asdf
+
 ```shell
 git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.5.0
 
@@ -79,6 +88,7 @@ brew install unixodbc
 ```
 
 # Install Node.js
+
 ```shell
 asdf plugin-add nodejs https://github.com/asdf-vm/asdf-nodejs.git
 bash ~/.asdf/plugins/nodejs/bin/import-release-team-keyring
@@ -88,6 +98,7 @@ asdf global nodejs <version>
 ```
 
 # Install Ruby
+
 ```shell
 asdf plugin-add ruby https://github.com/asdf-vm/asdf-ruby.git
 asdf list-all ruby | grep -v "[a-z]" | tail -1
@@ -96,12 +107,14 @@ asdf global ruby <version>
 ```
 
 # Setup Bundler
+
 ```shell
 sysctl -n hw.ncpu
 bundle config --global jobs <number_of_cores - 1>
 ```
 
 # Edit MacOS Settings
+
 ```shell
 # Disable smart quotes
 defaults write NSGlobalDomain NSAutomaticQuoteSubstitutionEnabled -bool false
