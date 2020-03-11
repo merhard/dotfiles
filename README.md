@@ -45,13 +45,17 @@ brew cask install adobe-acrobat-reader
 brew cask install alfred
 brew cask install caffeine
 brew cask install dash
+brew cask install docker
 brew cask install dropbox
+brew cask install firefox
 brew cask install flux
 brew cask install google-chrome
 brew cask install gpg-suite
+brew cask install postico
 brew cask install slack
 brew cask install sublime-merge
 brew cask install sublime-text
+brew cask install zsa-wally
 
 brew tap homebrew/cask-drivers
 brew cask install logitech-options
