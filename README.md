@@ -98,6 +98,31 @@ NODEJS_VERSION=$(asdf list all nodejs | tail -1) &&
 npm install -g npm
 ```
 
+# Install Elixir
+
+```shell
+asdf plugin add elixir https://github.com/asdf-vm/asdf-elixir.git
+
+ELIXIR_VERSION=$(asdf list all elixir | grep -v "^[a-z]" | tail -1) &&
+  asdf install elixir $ELIXIR_VERSION &&
+  asdf global elixir $ELIXIR_VERSION
+```
+
+# Install Erlang
+
+(Installed after Elixir so I know which version to get)
+https://hexdocs.pm/elixir/compatibility-and-deprecations.html#compatibility-between-elixir-and-erlang-otp
+
+```shell
+asdf plugin add erlang https://github.com/asdf-vm/asdf-erlang.git
+echo 'KERL_CONFIGURE_OPTIONS="--disable-debug --without-javac"' > ~/.asdf/plugins/erlang/kerl-home/.kerlrc
+
+ERLANG_MAJOR_VERSION=$(asdf list elixir | ruby -e 'puts ARGF.read.split("otp-").last') &&
+  ERLANG_VERSION=$(asdf list all erlang | grep "^$ERLANG_MAJOR_VERSION" | tail -1) &&
+  asdf install erlang $ERLANG_VERSION &&
+  asdf global erlang $ERLANG_VERSION
+```
+
 # Install Ruby
 
 ```shell
