@@ -1,43 +1,43 @@
 [user]
-	name = Matthew Erhard
-	email = merhard@gmail.com
+  name = Matthew Erhard
+  email = merhard@gmail.com
 [filter "media"]
-	required = true
-	clean = git media clean %f
-	smudge = git media smudge %f
+  required = true
+  clean = git media clean %f
+  smudge = git media smudge %f
 [alias]
-	co = checkout
-	br = branch
-	ci = commit
-	st = status
-	hist = log --pretty=format:'%h %ad | %s%d [%an]' --graph --date=short
-	list-branches = branch --sort=committerdate
-	lbr = list-branches
-	delete-merged-branches = !git branch --merged master | grep -v -e 'master' -e '\\*' | xargs -n 1 git branch -D && git remote prune origin
-	dmbr = delete-merged-branches
+  co = checkout
+  br = branch
+  ci = commit
+  st = status
+  hist = log --pretty=format:'%h %ad | %s%d [%an]' --graph --date=short
+  list-branches = branch --sort=committerdate
+  lbr = list-branches
+  delete-merged-branches = !git branch --merged master | grep -v -e 'master' -e '\\*' | xargs -n 1 git branch -D && git remote prune origin
+  dmbr = delete-merged-branches
 [core]
-	editor = vim
-	autocrlf = input
-	excludesfile = /Users/merhard/.gitignore
+  editor = vim
+  autocrlf = input
+  excludesfile = /Users/merhard/.gitignore
 [color]
-	ui = true
+  ui = true
 [filter "hawser"]
-	clean = git hawser clean %f
-	smudge = git hawser smudge %f
-	required = true
+  clean = git hawser clean %f
+  smudge = git hawser smudge %f
+  required = true
 [filter "lfs"]
-	clean = git lfs clean %f
-	smudge = git lfs smudge %f
-	required = true
+  clean = git lfs clean %f
+  smudge = git lfs smudge %f
+  required = true
 [credential]
-	helper = osxkeychain
+  helper = osxkeychain
 [push]
-	default = simple
+  default = simple
 [rerere]
-	enabled = true
+  enabled = true
 [merge]
-	ff = only
+  ff = only
 [fetch]
-	prune = true
+  prune = true
 [rebase]
-	autosquash = true
+  autosquash = true
