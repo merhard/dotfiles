@@ -16,9 +16,13 @@ GIT_COMMAND = lambda do |since, before|
   " --before=#{before.strftime('%Y-%m-%d')}"
 end
 
-REPO_DIRS = Rake::FileList.new(
-  File.join(Dir.home, "Projects/**/.git")
-).pathmap('%d')
+REPO_DIRS =
+  Rake::FileList.new(
+    File.join(Dir.home, 'Projects', '**', '.git')
+  ) do |fl|
+    fl.exclude(/node_modules/)
+    fl.exclude(/tmp/)
+  end.pathmap('%d')
 
 options = {}
 OptionParser.new do |opts|
