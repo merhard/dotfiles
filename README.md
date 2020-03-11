@@ -64,14 +64,15 @@ brew cask install logitech-unifying
 
 # Install ASDF
 
-https://github.com/asdf-vm/asdf
+https://asdf-vm.com/#/core-manage-asdf-vm?id=install-asdf-vm
 
 ```shell
-git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.5.0
+brew install asdf
 
 brew install autoconf
 brew install automake
 brew install coreutils
+brew install curl
 brew install libffi
 brew install libtool
 brew install libxslt
@@ -79,25 +80,32 @@ brew install libyaml
 brew install openssl
 brew install readline
 brew install unixodbc
+brew install unzip
+brew install wxmac
 ```
 
 # Install Node.js
 
 ```shell
-asdf plugin-add nodejs https://github.com/asdf-vm/asdf-nodejs.git
-bash ~/.asdf/plugins/nodejs/bin/import-release-team-keyring
-asdf list-all nodejs | tail -1
-asdf install nodejs <version>
-asdf global nodejs <version>
+asdf plugin add nodejs https://github.com/asdf-vm/asdf-nodejs.git
+
+~/.asdf/plugins/nodejs/bin/import-release-team-keyring
+
+NODEJS_VERSION=$(asdf list all nodejs | tail -1) &&
+  asdf install nodejs $NODEJS_VERSION &&
+  asdf global nodejs $NODEJS_VERSION
+
+npm install -g npm
 ```
 
 # Install Ruby
 
 ```shell
-asdf plugin-add ruby https://github.com/asdf-vm/asdf-ruby.git
-asdf list-all ruby | grep -v "[a-z]" | tail -1
-asdf install ruby <version>
-asdf global ruby <version>
+asdf plugin add ruby https://github.com/asdf-vm/asdf-ruby.git
+
+RUBY_VERSION=$(asdf list all ruby | grep -v "[a-z]" | tail -1) &&
+  asdf install ruby $RUBY_VERSION &&
+  asdf global ruby $RUBY_VERSION
 ```
 
 # Setup Bundler
