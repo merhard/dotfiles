@@ -11,9 +11,9 @@
   ci = commit
   st = status
   hist = log --pretty=format:'%h %ad | %s%d [%an]' --graph --date=short
-  list-branches = branch --sort=committerdate
+  list-branches = branch -v --sort=committerdate
   lbr = list-branches
-  delete-merged-branches = !git branch --merged master | grep -v -e 'master' -e '\\*' | xargs -n 1 git branch -D && git remote prune origin
+  delete-merged-branches = !git branch -v | grep -e '\\[gone\\]' | grep -v -e 'master' -e '\\*' | awk '{ print $1 }' | xargs -n 1 git branch -D
   dmbr = delete-merged-branches
 [core]
   editor = vim
