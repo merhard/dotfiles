@@ -131,13 +131,8 @@ asdf plugin add ruby https://github.com/asdf-vm/asdf-ruby.git
 RUBY_VERSION=$(asdf list all ruby | grep -v "[a-z]" | tail -1) &&
   asdf install ruby $RUBY_VERSION &&
   asdf global ruby $RUBY_VERSION
-```
 
-# Setup Bundler
-
-```shell
-sysctl -n hw.ncpu
-bundle config --global jobs <number_of_cores - 1>
+bundle config --global jobs $(( $(sysctl -n hw.ncpu) - 1 ))
 ```
 
 # Setup SSH Key
