@@ -63,6 +63,18 @@ brew cask install logitech-options
 brew cask install logitech-unifying
 ```
 
+# Setup SSH Key
+
+https://help.github.com/en/github/authenticating-to-github/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent
+
+# Install Dotfiles
+
+```shell
+git clone git@github.com:merhard/dotfiles.git ~/dotfiles
+
+~/dotfiles/install
+```
+
 # Install ASDF
 
 https://asdf-vm.com/#/core-manage-asdf-vm?id=install-asdf-vm
@@ -134,17 +146,6 @@ RUBY_VERSION=$(asdf list all ruby | grep -v "[a-z]" | tail -1) &&
   asdf global ruby $RUBY_VERSION
 
 bundle config --global jobs $(( $(sysctl -n hw.ncpu) - 1 ))
-```
-
-# Setup SSH Key
-
-https://help.github.com/en/github/authenticating-to-github/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent
-
-# Install Dotfiles
-
-```shell
-git clone git@github.com:merhard/dotfiles.git ~/dotfiles
-~/dotfiles/install
 ```
 
 # Edit MacOS Settings

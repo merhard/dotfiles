@@ -1,3 +1,3 @@
 export PATH="$HOME/.bin:$PATH"
 
-. $(brew --prefix asdf)/asdf.sh
+[[ -d "$HOME/.asdf" ]] && source $(brew --prefix asdf)/asdf.sh
