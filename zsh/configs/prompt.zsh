@@ -62,9 +62,10 @@ node_prompt () {
 }
 
 time_prompt="%{%F{yellow}%}%T%{%f%}"
-session_prompt="%{%F{blue}%}%n@%m%{%f%}"
+username_prompt="%{%F{blue}%}%n%{%f%}"
+machine_prompt="%{%B%F{red}%}%m%{%f%b%}"
 dir_prompt="%{%F{cyan}%}%~%{%f%}"
 
 RPROMPT="%{$(echotc UP 1)%}\$(git_prompt)\$(ruby_prompt)\$(elixir_prompt)\$(node_prompt)%{$(echotc DO 1)%}"
-PROMPT="$time_prompt $session_prompt:$dir_prompt
+PROMPT="$time_prompt $username_prompt@$machine_prompt:$dir_prompt
 $ "
