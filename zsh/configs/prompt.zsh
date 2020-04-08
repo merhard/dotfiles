@@ -11,7 +11,7 @@ git_prompt () {
   branch_prompt="%F{136}${ref#refs/heads/}%f"
 
   git_status=$(command git status -s --ignore-submodules=dirty 2> /dev/null | tail -n1)
-  if [[ -n $git_status ]]; then
+  if [ -n $git_status ]; then
     status_prompt='%F{red}✗%f'
   else
     status_prompt='%F{green}✓%f'
@@ -24,7 +24,11 @@ ruby_prompt () {
   # Show version only for Ruby-specific folders
   [[ -f Gemfile || -f Rakefile || -n *.rb(#qN^/) ]] || return
 
-  local ruby_version=$(asdf current ruby | awk '{print $1}')
+  if [ -x /usr/local/bin/asdf ]; then
+    ruby_version=$(asdf current ruby | awk -F" |-|p" '{print $1}')
+  else
+    ruby_version=$(ruby --version | awk -F" |-|p" '{print $2}')
+  fi
 
   echo " %F{red}ruby-$ruby_version%f"
 }
@@ -33,7 +37,11 @@ elixir_prompt () {
   # Show version only for Elixir-specific folders
   [[ -f mix.exs || -n *.ex(#qN^/) || -n *.exs(#qN^/) ]] || return
 
-  local elixir_version=$(asdf current elixir | awk '{print $1}')
+  if [ -x /usr/local/bin/asdf ]; then
+    elixir_version=$(asdf current elixir | awk -F" |-" '{print $1}')
+  else
+    elixir_version=$(elixir --version | tail -1 | awk '{print $2}')
+  fi
 
   echo " %F{magenta}elixir-$elixir_version%f"
 }
@@ -42,7 +50,13 @@ node_prompt () {
   # Show version only for JS-specific folders
   [[ -f package.json || -d node_modules || -n *.js(#qN^/) ]] || return
 
-  local node_version=$(asdf current nodejs | awk '{print $1}')
+  if [ -x /usr/local/bin/asdf ]; then
+    node_version=$(asdf current nodejs | awk '{print $1}')
+  elif [ -x /usr/bin/nodejs ]; then
+    node_version=$(nodejs --version | awk '{print substr($1,2)}')
+  else
+    node_version=$(node --version | awk '{print substr($1,2)}')
+  fi
 
   echo " %F{green}node-$node_version%f"
 }
