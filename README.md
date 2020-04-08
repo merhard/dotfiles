@@ -109,6 +109,7 @@ NODEJS_VERSION=$(asdf list all nodejs | tail -1) &&
   asdf global nodejs $NODEJS_VERSION
 
 npm install -g npm
+npm install -g eslint
 ```
 
 # Install Elixir
