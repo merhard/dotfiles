@@ -8,13 +8,13 @@ git_prompt () {
   ref=$(command git symbolic-ref HEAD 2> /dev/null) || \
   ref=$(command git rev-parse --short HEAD 2> /dev/null) || return 0
 
-  branch_prompt="%F{136}${ref#refs/heads/}%f"
+  branch_prompt="%{%F{136}%}${ref#refs/heads/}%{%f%}"
 
   git_status=$(command git status -s --ignore-submodules=dirty 2> /dev/null | tail -n1)
   if [ -n $git_status ]; then
-    status_prompt='%F{red}✗%f'
+    status_prompt="%{%F{red}%}✗%{%f%}"
   else
-    status_prompt='%F{green}✓%f'
+    status_prompt="%{%F{green}%}✓%{%f%}"
   fi
 
   echo "$status_prompt $branch_prompt"
@@ -30,7 +30,7 @@ ruby_prompt () {
     ruby_version=$(ruby --version | awk -F" |-|p" '{print $2}')
   fi
 
-  echo " %F{red}ruby-$ruby_version%f"
+  echo " %{%F{red}%}ruby-$ruby_version%{%f%}"
 }
 
 elixir_prompt () {
@@ -43,7 +43,7 @@ elixir_prompt () {
     elixir_version=$(elixir --version | tail -1 | awk '{print $2}')
   fi
 
-  echo " %F{magenta}elixir-$elixir_version%f"
+  echo " %{%F{magenta}%}elixir-$elixir_version%{%f%}"
 }
 
 node_prompt () {
@@ -58,13 +58,13 @@ node_prompt () {
     node_version=$(node --version | awk '{print substr($1,2)}')
   fi
 
-  echo " %F{green}node-$node_version%f"
+  echo " %{%F{green}%}node-$node_version%{%f%}"
 }
 
-time_prompt='%F{yellow}%T%f'
-session_prompt='%F{blue}%n%f@%B%F{red}%m%f%b'
-dir_prompt='%F{cyan}%~%f'
+time_prompt="%{%F{yellow}%}%T%{%f%}"
+session_prompt="%{%F{blue}%}%n@%m%{%f%}"
+dir_prompt="%{%F{cyan}%}%~%{%f%}"
 
-RPROMPT='%{$(echotc UP 1)%}$(git_prompt)$(ruby_prompt)$(elixir_prompt)$(node_prompt)%{$(echotc DO 1)%}'
-PROMPT='$time_prompt $session_prompt:$dir_prompt
-$ '
+RPROMPT="%{$(echotc UP 1)%}\$(git_prompt)\$(ruby_prompt)\$(elixir_prompt)\$(node_prompt)%{$(echotc DO 1)%}"
+PROMPT="$time_prompt $session_prompt:$dir_prompt
+$ "
