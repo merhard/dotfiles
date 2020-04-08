@@ -8,7 +8,7 @@ alias ets='ember test --server --no-launch'
 
 alias flush-dns='sudo killall -HUP mDNSResponder'
 
-alias git=hub
+(( $+commands[hub] )) && alias git=hub
 
 alias history='fc -il 1'
 

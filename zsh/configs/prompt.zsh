@@ -24,7 +24,7 @@ ruby_prompt () {
   # Show version only for Ruby-specific folders
   [[ -f Gemfile || -f Rakefile || -n *.rb(#qN^/) ]] || return
 
-  if [ -x /usr/local/bin/asdf ]; then
+  if (( $+commands[asdf] )); then
     ruby_version=$(asdf current ruby | awk -F" |-|p" '{print $1}')
   else
     ruby_version=$(ruby --version | awk -F" |-|p" '{print $2}')
@@ -37,7 +37,7 @@ elixir_prompt () {
   # Show version only for Elixir-specific folders
   [[ -f mix.exs || -n *.ex(#qN^/) || -n *.exs(#qN^/) ]] || return
 
-  if [ -x /usr/local/bin/asdf ]; then
+  if (( $+commands[asdf] )); then
     elixir_version=$(asdf current elixir | awk -F" |-" '{print $1}')
   else
     elixir_version=$(elixir --version | tail -1 | awk '{print $2}')
@@ -50,9 +50,9 @@ node_prompt () {
   # Show version only for JS-specific folders
   [[ -f package.json || -d node_modules || -n *.js(#qN^/) ]] || return
 
-  if [ -x /usr/local/bin/asdf ]; then
+  if (( $+commands[asdf] )); then
     node_version=$(asdf current nodejs | awk '{print $1}')
-  elif [ -x /usr/bin/nodejs ]; then
+  elif (( $+commands[nodejs] )); then
     node_version=$(nodejs --version | awk '{print substr($1,2)}')
   else
     node_version=$(node --version | awk '{print substr($1,2)}')
