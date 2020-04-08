@@ -2,7 +2,7 @@
 
 require 'fileutils'
 
-excludes = %w[install README.md]
+excludes = %w[install.sh README.md]
 
 dotfiles = Dir[File.join(__dir__, '*')].map { |f| File.basename(f) } - excludes
 

@@ -72,7 +72,7 @@ https://help.github.com/en/github/authenticating-to-github/generating-a-new-ssh-
 ```shell
 git clone git@github.com:merhard/dotfiles.git ~/dotfiles
 
-~/dotfiles/install
+~/dotfiles/install.sh
 ```
 
 # Install ASDF
