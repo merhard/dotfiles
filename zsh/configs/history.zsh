@@ -11,3 +11,6 @@ setopt hist_ignore_space
 setopt hist_verify
 setopt inc_append_history
 setopt share_history
+
+# Enable Elixir/Erlang shell history
+export ERL_AFLAGS="-kernel shell_history enabled -kernel shell_history_file_bytes 1024000"
