@@ -11,7 +11,7 @@ git_prompt () {
   branch_prompt="%{%F{136}%}${ref#refs/heads/}%{%f%}"
 
   git_status=$(command git status -s --ignore-submodules=dirty 2> /dev/null | tail -n1)
-  if [ -n $git_status ]; then
+  if [[ -n $git_status ]]; then
     status_prompt="%{%F{red}%}✗%{%f%}"
   else
     status_prompt="%{%F{green}%}✓%{%f%}"
