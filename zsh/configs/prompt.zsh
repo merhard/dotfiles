@@ -12,9 +12,9 @@ git_prompt () {
 
   git_status=$(command git status -s --ignore-submodules=dirty 2> /dev/null | tail -n1)
   if [[ -n $git_status ]]; then
-    status_prompt="%{%F{red}%}✗%{%f%}"
+    status_prompt="%{%F{red}%}%{✗%G%}%{%f%}"
   else
-    status_prompt="%{%F{green}%}✓%{%f%}"
+    status_prompt="%{%F{green}%}%{✓%G%}%{%f%}"
   fi
 
   echo "$status_prompt $branch_prompt"
