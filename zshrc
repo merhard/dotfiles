@@ -1,6 +1,6 @@
 export PATH="$HOME/.bin:$PATH"
 
-(( $+commands[brew] )) && (( $+commands[asdf] )) && source $(brew --prefix asdf)/asdf.sh
+[[ -f /usr/local/opt/asdf/asdf.sh ]] && source /usr/local/opt/asdf/asdf.sh
 
 for config in ~/.zsh/configs/*; do
   source $config
