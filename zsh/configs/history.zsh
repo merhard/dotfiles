@@ -1,4 +1,4 @@
-HISTFILE=$HOME/.zsh_history
+[[ -v HISTFILE ]] || HISTFILE=$HOME/.zsh_history
 
 HISTSIZE=10000
 SAVEHIST=10000
@@ -13,4 +13,8 @@ setopt inc_append_history
 setopt share_history
 
 # Enable Elixir/Erlang shell history
-export ERL_AFLAGS="-kernel shell_history enabled -kernel shell_history_file_bytes 1024000"
+[[ -v IEX_HISTFILE ]] || IEX_HISTFILE=$HOME/.iex_history
+ERL_AFLAGS="-kernel shell_history enabled"
+ERL_AFLAGS="$ERL_AFLAGS -kernel shell_history_file_bytes 1024000"
+ERL_AFLAGS="$ERL_AFLAGS -kernel shell_history_path '\"$IEX_HISTFILE\"'"
+export ERL_AFLAGS
