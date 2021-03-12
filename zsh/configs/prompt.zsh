@@ -25,7 +25,7 @@ ruby_prompt () {
   [[ -f Gemfile || -f Rakefile || -n *.rb(#qN^/) ]] || return
 
   if (( $+commands[asdf] )); then
-    ruby_version=$(asdf current ruby | awk -F" |-|p" '{print $1}')
+    ruby_version=$(asdf current ruby | awk '{print $2}')
   else
     ruby_version=$(ruby --version | awk -F" |-|p" '{print $2}')
   fi
