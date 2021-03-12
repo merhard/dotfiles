@@ -19,6 +19,7 @@
   editor = vim
   autocrlf = input
   excludesfile = ~/.gitignore_global
+  attributesfile = ~/.gitattributes
 [color]
   ui = true
 [filter "hawser"]
@@ -43,3 +44,9 @@
   autosquash = true
 [include]
   path = .gitconfig-local
+[init]
+  defaultBranch = main
+[pull]
+  ff = only
+[diff "rspec"]
+  xfuncname = "^[ \t]*((RSpec|describe|context|it|before|after|around|feature|scenario|background)[ \t].*)$"
