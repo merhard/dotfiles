@@ -6,7 +6,7 @@ alias buc='brew upgrade && brew cleanup -s'
 
 alias ets='ember test --server --no-launch'
 
-alias flush-dns='sudo killall -HUP mDNSResponder'
+alias flush-dns='sudo dscacheutil -flushcache; sudo killall -HUP mDNSResponder'
 
 (( $+commands[hub] )) && alias git=hub
 
