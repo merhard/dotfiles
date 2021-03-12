@@ -52,6 +52,7 @@ brew cask install firefox
 brew cask install flux
 brew cask install google-chrome
 brew cask install gpg-suite
+brew cask install hey
 brew cask install postico
 brew cask install slack
 brew cask install sublime-merge
