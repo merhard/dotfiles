@@ -2,9 +2,9 @@
 
 require 'fileutils'
 
-excludes = %w[install.sh README.md]
+excludes = %w[. .. .git install.sh README.md]
 
-dotfiles = Dir[File.join(__dir__, '*')].map { |f| File.basename(f) } - excludes
+dotfiles = Dir.glob('*', File::FNM_DOTMATCH, base: __dir__) - excludes
 
 totals = { symlinked: 0, skipped: 0 }
 
@@ -12,7 +12,7 @@ puts "Symlinking dotfiles to: #{Dir.home}"
 
 dotfiles.each do |dotfile|
   source      = File.join(__dir__, dotfile)
-  destination = File.join(Dir.home, ".#{dotfile}")
+  destination = File.join(Dir.home, dotfile)
 
   if File.exist?(destination)
     puts "Skipping (already exists): #{destination}"

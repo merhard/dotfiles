@@ -1,4 +1,4 @@
-export PATH="$HOME/.bin:$PATH"
+export PATH="$HOME/bin:$PATH"
 
 [[ -f /usr/local/opt/asdf/asdf.sh ]] && source /usr/local/opt/asdf/asdf.sh
 
