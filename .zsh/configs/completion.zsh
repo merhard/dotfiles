@@ -1,3 +1,5 @@
+[[ -v ASDF_DIR ]] && fpath=(${ASDF_DIR}/completions $fpath)
+
 autoload -Uz compinit
 compinit
 

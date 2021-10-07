@@ -78,59 +78,56 @@ git clone git@github.com:merhard/dotfiles.git ~/dotfiles
 
 # Install ASDF
 
-https://asdf-vm.com/#/core-manage-asdf-vm?id=install-asdf-vm
+https://asdf-vm.com/guide/getting-started.html
 
-```shell
-brew install asdf
-
-brew install autoconf
-brew install automake
-brew install coreutils
-brew install curl
-brew install libffi
-brew install libtool
-brew install libxslt
-brew install libyaml
-brew install openssl
-brew install readline
-brew install unixodbc
-brew install unzip
-brew install wxmac
-```
-
-# Install Node.js
+## Install Node.js
 
 ```shell
 asdf plugin add nodejs https://github.com/asdf-vm/asdf-nodejs.git
 
-~/.asdf/plugins/nodejs/bin/import-release-team-keyring
+brew install gpg
+brew install gawk
+
+export GNUPGHOME="$ASDF_DIR/keyrings/nodejs" &&
+  mkdir -p "$GNUPGHOME" &&
+  chmod 0700 "$GNUPGHOME"
+bash "$ASDF_DIR/plugins/nodejs/bin/import-release-team-keyring"
 
 NODEJS_VERSION=$(asdf list all nodejs | tail -1) &&
   asdf install nodejs $NODEJS_VERSION &&
   asdf global nodejs $NODEJS_VERSION
 
 npm install -g npm
-npm install -g eslint
 ```
 
-# Install Elixir
+## Install Elixir
 
 ```shell
 asdf plugin add elixir https://github.com/asdf-vm/asdf-elixir.git
+
+brew install unzip
 
 ELIXIR_VERSION=$(asdf list all elixir | grep -v "^[a-z]" | tail -1) &&
   asdf install elixir $ELIXIR_VERSION &&
   asdf global elixir $ELIXIR_VERSION
 ```
 
-# Install Erlang
+## Install Erlang
 
 (Installed after Elixir so I know which version to get)
 https://hexdocs.pm/elixir/compatibility-and-deprecations.html#compatibility-between-elixir-and-erlang-otp
 
 ```shell
 asdf plugin add erlang https://github.com/asdf-vm/asdf-erlang.git
-echo 'KERL_CONFIGURE_OPTIONS="--disable-debug --without-javac"' > ~/.asdf/plugins/erlang/kerl-home/.kerlrc
+
+brew install autoconf
+brew install openssl@1.1
+brew install unixodbc
+brew install wxwidgets
+
+KERL_HOME="$ASDF_DIR/plugins/erlang/kerl-home" &&
+  mkdir "$KERL_HOME" &&
+  echo "KERL_CONFIGURE_OPTIONS=\"--disable-debug --without-javac --with-ssl=$(brew --prefix openssl@1.1)\"" > "$KERL_HOME/.kerlrc"
 
 ERLANG_MAJOR_VERSION=$(asdf list elixir | ruby -e 'puts ARGF.read.split("otp-").last') &&
   ERLANG_VERSION=$(asdf list all erlang | grep "^$ERLANG_MAJOR_VERSION" | tail -1) &&
@@ -138,12 +135,16 @@ ERLANG_MAJOR_VERSION=$(asdf list elixir | ruby -e 'puts ARGF.read.split("otp-").
   asdf global erlang $ERLANG_VERSION
 ```
 
-# Install Ruby
+## Install Ruby
 
 ```shell
 asdf plugin add ruby https://github.com/asdf-vm/asdf-ruby.git
 
+brew install openssl@1.1
+brew install readline
+
 RUBY_VERSION=$(asdf list all ruby | grep -v "[a-z]" | tail -1) &&
+  RUBY_CONFIGURE_OPTS="--with-openssl-dir=$(brew --prefix openssl@1.1)" \
   asdf install ruby $RUBY_VERSION &&
   asdf global ruby $RUBY_VERSION
 

@@ -25,9 +25,9 @@ ruby_prompt () {
   [[ -f Gemfile || -f Rakefile || -n *.rb(#qN^/) ]] || return
 
   if (( $+commands[asdf] )); then
-    ruby_version=$(asdf current ruby | awk '{print $2}')
+    ruby_version=$(asdf current ruby | ruby -ane 'puts $F[1]')
   else
-    ruby_version=$(ruby --version | awk -F" |-|p" '{print $2}')
+    ruby_version=$(ruby --version | ruby -ane 'puts $F[1].split("p")[0]')
   fi
 
   echo " %{%F{red}%}ruby-$ruby_version%{%f%}"
@@ -38,9 +38,9 @@ elixir_prompt () {
   [[ -f mix.exs || -n *.ex(#qN^/) || -n *.exs(#qN^/) ]] || return
 
   if (( $+commands[asdf] )); then
-    elixir_version=$(asdf current elixir | awk -F" |-" '{print $1}')
+    elixir_version=$(asdf current elixir | ruby -ane 'puts $F[1].split("-")[0]')
   else
-    elixir_version=$(elixir --version | tail -1 | awk '{print $2}')
+    elixir_version=$(elixir --version | tail -1 | ruby -ane 'puts $F[1]')
   fi
 
   echo " %{%F{magenta}%}elixir-$elixir_version%{%f%}"
@@ -51,11 +51,11 @@ node_prompt () {
   [[ -f package.json || -d node_modules || -n *.js(#qN^/) ]] || return
 
   if (( $+commands[asdf] )); then
-    node_version=$(asdf current nodejs | awk '{print $1}')
+    node_version=$(asdf current nodejs | ruby -ane 'puts $F[1]')
   elif (( $+commands[nodejs] )); then
-    node_version=$(nodejs --version | awk '{print substr($1,2)}')
+    node_version=$(nodejs --version | ruby -pe 'sub(/^v/, "")')
   else
-    node_version=$(node --version | awk '{print substr($1,2)}')
+    node_version=$(node --version | ruby -pe 'sub(/^v/, "")')
   fi
 
   echo " %{%F{green}%}node-$node_version%{%f%}"
