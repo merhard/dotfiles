@@ -2,7 +2,7 @@ export PATH="$HOME/bin:$PATH"
 
 [[ -f "$HOME/.asdf/asdf.sh" ]] && source $HOME/.asdf/asdf.sh
 
-for config in ~/.zsh/configs/*; do
+for config in $HOME/.zsh/configs/*; do
   source $config
 done
 
