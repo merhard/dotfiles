@@ -4,8 +4,6 @@
 xcode-select --install
 
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
-
-brew install wget
 ```
 
 # Install ZSH
@@ -24,45 +22,30 @@ brew install hub
 brew install ruby
 brew install the_silver_searcher
 brew install vim
-brew install watchman
-brew install yarn
+brew install wget
 
 brew install postgresql
 brew services start postgresql
-
-brew install redis
-brew services start redis
 ```
 
 # Install applications
 
+```shell
+brew install --cask 1password
+brew install --cask adobe-acrobat-reader
+brew install --cask alfred
+brew install --cask caffeine
+brew install --cask dash
+brew install --cask dropbox
+brew install --cask firefox
+brew install --cask flux
+brew install --cask google-chrome
+brew install --cask slack
+brew install --cask sublime-merge
+brew install --cask sublime-text
+```
 - Sophos Antivirus from website
 - Moom from App Store (for license)
-- Remaining from Homebrew:
-
-```shell
-brew cask install 1password
-brew cask install adobe-acrobat-reader
-brew cask install alfred
-brew cask install caffeine
-brew cask install dash
-brew cask install docker
-brew cask install dropbox
-brew cask install firefox
-brew cask install flux
-brew cask install google-chrome
-brew cask install gpg-suite
-brew cask install hey
-brew cask install postico
-brew cask install slack
-brew cask install sublime-merge
-brew cask install sublime-text
-brew cask install zsa-wally
-
-brew tap homebrew/cask-drivers
-brew cask install logitech-options
-brew cask install logitech-unifying
-```
 
 # Setup SSH Key
 
