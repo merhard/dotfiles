@@ -1,0 +1,40 @@
+#!/usr/bin/env zsh
+
+# Requirements:
+# - `brew install ffmpeg`
+#
+# This function can then be called by:
+# `video-to-gif --src orig.mp4 --target newname --width 1920 --height 1080 --fps 30`
+#
+# Source:
+# https://engineering.giphy.com/how-to-make-gifs-with-ffmpeg/
+
+src="" # required
+target="" # optional (defaults to source file name)
+width="600" # optional (defaults to 600 pixels)
+height="-1" # optional (defaults to -1 which maintains original aspect ratio)
+fps=10 # optional (defaults to 10 fps -- helps drop frames)
+
+while [ $# -gt 0 ]; do
+  if [[ $1 == *"--"* ]]; then
+    param="${1/--/}"
+    declare $param="$2"
+  fi
+  shift
+done
+
+if [[ -z $src ]]; then
+  echo -e "\nPlease call 'video-to-gif --src <source video file>' to run this command\n"
+  return 1
+fi
+
+if [[ -z $target ]]; then
+  target=$src
+fi
+
+basename=${target%.*}
+[[ ${#basename} = 0 ]] && basename=$target
+target="$basename.gif"
+
+echo "ffmpeg -i \"$src\" -filter_complex \"[0:v] fps=$fps,scale=$width:$height,split [a][b];[a] palettegen [p];[b][p] paletteuse\" \"$target\""
+ffmpeg -i "$src" -filter_complex "[0:v] fps=$fps,scale=$width:$height,split [a][b];[a] palettegen [p];[b][p] paletteuse" "$target"

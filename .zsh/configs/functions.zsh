@@ -1,3 +1,2 @@
-function killport() {
-  kill `sudo lsof -t -i:$1`
-}
+fpath=(~/.zsh/functions $fpath)
+autoload -Uz $fpath[1]/*(.:t)
