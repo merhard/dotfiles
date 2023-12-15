@@ -13,7 +13,7 @@
   hist = log --pretty=format:'%h %ad | %s%d [%an]' --graph --date=short
   list-branches = branch -v --sort=committerdate
   lbr = list-branches
-  delete-merged-branches = !git branch -v | grep -e '\\[gone\\]' | grep -v -e 'master' -e '\\*' | awk '{ print $1 }' | xargs -n 1 git branch -D
+  delete-merged-branches = !git branch -v | grep -e '\\[gone\\]' | grep -v -e 'master' -e 'main' -e 'develop' -e '\\*' | awk '{ print $1 }' | xargs -n 1 git branch -D
   dmbr = delete-merged-branches
 [core]
   editor = vim
@@ -34,10 +34,9 @@
   helper = osxkeychain
 [push]
   default = simple
+	autoSetupRemote = true
 [rerere]
   enabled = true
-[merge]
-  ff = only
 [fetch]
   prune = true
 [rebase]
