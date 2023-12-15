@@ -1,0 +1,11 @@
+#!/bin/sh
+
+# Search your mix dependencies for the provided pattern
+#   Examples:
+#     mix-deps-search IO.inspect
+#
+# Arguments:
+#  1. What to search for
+
+pattern="$1"; shift
+rg --type elixir --type erlang "$pattern" deps

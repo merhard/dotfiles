@@ -8,6 +8,7 @@ alias ets='ember test --server --no-launch'
 
 (( $+commands[hub] )) && alias git=hub
 
+alias mds='mix-deps-search'
 
 alias nom='rm -rf dist node_modules tmp; npm i'
 

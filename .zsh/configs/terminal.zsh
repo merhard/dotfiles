@@ -18,7 +18,7 @@ function termsupport_preexec {
   emulate -L zsh
   setopt extended_glob
 
-  local CMD="${1[(wr)^(*=*|sudo|ssh|mosh|rake|-*)]:gs/%/%%}"
+  local CMD="${1[(wr)^(*=*|sudo|ssh|mosh|rake|mix|-*)]:gs/%/%%}"
 
   title "$CMD"
 }

@@ -93,6 +93,9 @@ brew install unzip
 ELIXIR_VERSION=$(asdf list all elixir | grep -v "^[a-z]" | tail -1) &&
   asdf install elixir $ELIXIR_VERSION &&
   asdf global elixir $ELIXIR_VERSION
+
+mix local.hex --force
+mix local.rebar --force
 ```
 
 ## Install Erlang
