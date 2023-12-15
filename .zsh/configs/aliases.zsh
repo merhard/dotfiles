@@ -1,5 +1,5 @@
-alias b='bundle install'
-alias bu='bundle update --conservative'
+alias b='bundle'
+alias be='bundle exec'
 
 alias buo='brew update && brew outdated'
 alias buc='brew upgrade && brew cleanup -s'
